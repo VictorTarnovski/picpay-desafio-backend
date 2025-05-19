@@ -8,7 +8,6 @@ public record CNPJ(String value) {
 
     public CNPJ(String value) {
         Objects.requireNonNull(value, "CNPJ must not be null");
-
         String numeric = value.replaceAll("\\D", "");
 
         if (!ONLY_DIGITS.matcher(numeric).matches()) {
