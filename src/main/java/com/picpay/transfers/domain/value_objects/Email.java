@@ -1,5 +1,8 @@
 package com.picpay.transfers.domain.value_objects;
 
+import com.picpay.transfers.domain.exceptions.InvalidEmailFormatException;
+
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public record Email(String value) {
@@ -10,8 +13,9 @@ public record Email(String value) {
     );
 
     public Email {
-        if (value == null || !EMAIL_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException("Invalid email format: " + value);
+        Objects.requireNonNull(value, "CPF must not be null");
+        if (!EMAIL_PATTERN.matcher(value).matches()) {
+            throw new InvalidEmailFormatException(value);
         }
     }
 }
