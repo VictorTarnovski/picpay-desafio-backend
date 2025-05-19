@@ -1,5 +1,8 @@
 package com.picpay.transfers.domain.value_objects;
 
+import com.picpay.transfers.domain.exceptions.InvalidCPFException;
+import com.picpay.transfers.domain.exceptions.InvalidCPFLenghtException;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -11,11 +14,11 @@ public record CPF(String value) {
         String numeric = value.replaceAll("\\D", "");
 
         if (!ONLY_DIGITS.matcher(numeric).matches()) {
-            throw new IllegalArgumentException("CPF must contain exactly 11 digits");
+            throw new InvalidCPFLenghtException();
         }
 
         if (!isValid(numeric)) {
-            throw new IllegalArgumentException("Invalid CPF");
+            throw new InvalidCPFException();
         }
 
         this.value = this.format(numeric);
