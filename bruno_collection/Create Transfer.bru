@@ -1,0 +1,19 @@
+meta {
+  name: Create Transfer
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/transfer
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "value": 100.0,
+    "payer": 4,
+    "payee": 15
+  }
+}
