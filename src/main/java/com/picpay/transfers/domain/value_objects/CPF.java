@@ -14,14 +14,14 @@ public record CPF(String value) {
             throw new IllegalArgumentException("CPF must contain exactly 11 digits");
         }
 
-        if (!isValidCPF(numeric)) {
+        if (!isValid(numeric)) {
             throw new IllegalArgumentException("Invalid CPF");
         }
 
         this.value = this.format(numeric);
     }
 
-    private boolean isValidCPF(String cpf) {
+    private boolean isValid(String cpf) {
         // Invalid known CPFs
         if (cpf.chars().distinct().count() == 1) return false;
 
@@ -46,18 +46,5 @@ public record CPF(String value) {
             value.substring(3, 6) + "." +
             value.substring(6, 9) + "-" +
             value.substring(9);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CPF)) return false;
-        CPF cpf = (CPF) o;
-        return value.equals(cpf.value);
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
     }
 }

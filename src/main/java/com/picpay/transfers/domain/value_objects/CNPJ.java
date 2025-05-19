@@ -15,14 +15,14 @@ public record CNPJ(String value) {
             throw new IllegalArgumentException("CNPJ must contain exactly 14 digits");
         }
 
-        if (!isValidCNPJ(numeric)) {
+        if (!isValid(numeric)) {
             throw new IllegalArgumentException("Invalid CNPJ");
         }
 
         this.value = format(numeric);
     }
 
-    private boolean isValidCNPJ(String cnpj) {
+    private boolean isValid(String cnpj) {
         // Repeated digits check
         if (cnpj.chars().distinct().count() == 1) return false;
 
@@ -47,18 +47,5 @@ public record CNPJ(String value) {
             value.substring(5, 8) + "/" +
             value.substring(8, 12) + "-" +
             value.substring(12);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CNPJ)) return false;
-        CNPJ cnpj = (CNPJ) o;
-        return value.equals(cnpj.value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
     }
 }
