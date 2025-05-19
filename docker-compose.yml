@@ -1,0 +1,19 @@
+version: '3.8'
+
+name: picpay-transfers-backend
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: picpay-transfers-backend-postgres
+    environment:
+      POSTGRES_DB: picpay
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+
+volumes:
+  postgres_volume:
