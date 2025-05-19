@@ -1,12 +1,11 @@
 package com.picpay.transfers.domain.value_objects;
 
 import java.util.Currency;
+import java.util.Objects;
 
 public record Money(int amount, Currency currency) {
     public Money {
-        if (currency == null) {
-            throw new IllegalArgumentException("Currency cannot be null");
-        }
+        Objects.requireNonNull(currency, "Currency cannot be null");
     }
 
     public int amount() {
