@@ -3,12 +3,12 @@ package com.picpay.transfers.domain.value_objects;
 import java.util.Currency;
 import java.util.Objects;
 
-public record Money(int amount, Currency currency) {
+public record Money(long amount, Currency currency) {
     public Money {
         Objects.requireNonNull(currency, "Currency cannot be null");
     }
 
-    public int amount() {
+    public long amount() {
         return amount;
     }
 

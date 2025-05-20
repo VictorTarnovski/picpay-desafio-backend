@@ -7,7 +7,7 @@ import com.picpay.transfers.domain.value_objects.*;
 import java.util.List;
 
 public abstract class User implements TransferPayee {
-    protected int id;
+    protected long id;
     protected String fullName;
     protected String document;
     protected Email email;
@@ -29,7 +29,7 @@ public abstract class User implements TransferPayee {
         this.balance = initialBalance;
     }
 
-    public int id() {
+    public long id() {
         return id;
     }
 
@@ -39,12 +39,12 @@ public abstract class User implements TransferPayee {
         }
     }
 
-    protected void addTransfer(Money amount, int payerId, int payeeId) {
+    protected void addTransfer(Money amount, long payerId, long payeeId) {
         var transfer = new Transfer(amount, payerId, payeeId);
         this.transfers.add(transfer);
     }
 
-    public void receiveTransfer(Money amount, int payerId, int payeeId) {
+    public void receiveTransfer(Money amount, long payerId, long payeeId) {
         var newBalance = balance.add(amount);
         updateBalance(newBalance);
         addTransfer(amount, payerId, payeeId);

@@ -4,8 +4,8 @@ import jakarta.validation.constraints.Min;
 
 public record CreateTransferDto(
     @Min(1)
-    int value,
+    long value,
     @Min(1)
-    int payer,
+    long payer,
     @Min(1)
-    int payee) { }
+    long payee) { }
