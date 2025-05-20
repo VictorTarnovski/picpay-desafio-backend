@@ -1,7 +1,7 @@
 package com.picpay.transfers.domain;
 
-import com.picpay.transfers.domain.value_objects.Money;
+import com.picpay.transfers.domain.entities.Transfer;
 
 public interface TransferPayer {
-    void payTransfer(Money amount, TransferPayee payee);
+    void payTransfer(Transfer transfer, TransferPayee payee);
 }

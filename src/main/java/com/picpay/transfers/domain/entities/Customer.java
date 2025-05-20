@@ -14,11 +14,10 @@ public final class Customer extends User implements TransferPayer {
         super(fullName, cpf.toString(), email, provider, initialBalance);
     }
 
-    public void payTransfer(Money amount, TransferPayee payee) {
-        var newBalance = balance.subtract(amount);
+    public void payTransfer(Transfer transfer, TransferPayee payee) {
+        var newBalance = balance.subtract(transfer.value());
         updateBalance(newBalance);
-        addTransfer(amount, id, payee.id());
 
-        payee.receiveTransfer(amount, id, payee.id());
+        payee.receiveTransfer(transfer);
     }
 }

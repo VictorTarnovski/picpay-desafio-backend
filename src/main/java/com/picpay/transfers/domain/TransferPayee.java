@@ -1,8 +1,8 @@
 package com.picpay.transfers.domain;
 
-import com.picpay.transfers.domain.value_objects.Money;
+import com.picpay.transfers.domain.entities.Transfer;
 
 public interface TransferPayee {
     long id();
-    void receiveTransfer(Money amount, long payerId, long payeeId);
+    void receiveTransfer(Transfer transfer);
 }

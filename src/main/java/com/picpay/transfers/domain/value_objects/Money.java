@@ -8,6 +8,10 @@ public record Money(long amount, Currency currency) {
         Objects.requireNonNull(currency, "Currency cannot be null");
     }
 
+    public static Money Real(long amount) {
+        return new Money(amount, Currency.getInstance("BR"));
+    }
+
     public long amount() {
         return amount;
     }

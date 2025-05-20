@@ -4,8 +4,6 @@ import com.picpay.transfers.domain.*;
 import com.picpay.transfers.domain.exceptions.InvalidBalanceException;
 import com.picpay.transfers.domain.value_objects.*;
 
-import java.util.List;
-
 public abstract class User implements TransferPayee {
     protected long id;
     protected String fullName;
@@ -13,7 +11,6 @@ public abstract class User implements TransferPayee {
     protected Email email;
     protected String password;
     protected Money balance;
-    protected List<Transfer> transfers;
 
     public User(
         String fullName,
@@ -39,14 +36,8 @@ public abstract class User implements TransferPayee {
         }
     }
 
-    protected void addTransfer(Money amount, long payerId, long payeeId) {
-        var transfer = new Transfer(amount, payerId, payeeId);
-        this.transfers.add(transfer);
-    }
-
-    public void receiveTransfer(Money amount, long payerId, long payeeId) {
-        var newBalance = balance.add(amount);
+    public void receiveTransfer(Transfer transfer) {
+        var newBalance = balance.add(transfer.value());
         updateBalance(newBalance);
-        addTransfer(amount, payerId, payeeId);
     }
 }
