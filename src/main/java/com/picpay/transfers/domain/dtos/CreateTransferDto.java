@@ -1,4 +1,11 @@
 package com.picpay.transfers.domain.dtos;
 
-public record CreateTransferDto(int value, int payer, int payee) {
-}
+import jakarta.validation.constraints.Min;
+
+public record CreateTransferDto(
+    @Min(1)
+    int value,
+    @Min(1)
+    int payer,
+    @Min(1)
+    int payee) { }
