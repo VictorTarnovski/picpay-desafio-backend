@@ -2,14 +2,16 @@ package com.picpay.transaction_processing.domain.entities;
 
 import com.picpay.shared.domain.entities.AccountId;
 import com.picpay.shared.domain.value_objects.Money;
+import com.picpay.transaction_processing.domain.events.TransactionCreated;
 import com.picpay.transaction_processing.domain.repositories.TransactionRepository;
 import jakarta.persistence.*;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "transactions", schema = "transaction_processing")
-public class Transaction {
+public class Transaction extends AbstractAggregateRoot<Transaction> {
     @EmbeddedId
     protected TransactionId id;
 
@@ -46,6 +48,8 @@ public class Transaction {
 
         Objects.requireNonNull(payeeId, "payeeId must not be null");
         this.payeeId = payeeId;
+
+        this.registerEvent(new TransactionCreated(this.id, this.value, this.payerId, this.payeeId));
     }
 
     public Money value() {
