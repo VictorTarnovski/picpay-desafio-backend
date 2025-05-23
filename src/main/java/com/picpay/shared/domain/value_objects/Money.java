@@ -11,6 +11,10 @@ public record Money(long amount, Currency currency) {
         Objects.requireNonNull(currency, "currency must not be null");
     }
 
+    public Money(Currency currency) {
+        this(0, currency);
+    }
+
     public static Money Real(long amount) {
         return new Money(amount, Currency.getInstance("BRL"));
     }

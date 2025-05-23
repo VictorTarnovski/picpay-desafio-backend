@@ -2,5 +2,7 @@ package com.picpay.account_management.domain.events;
 
 import com.picpay.shared.domain.entities.AccountId;
 
-public record AccountCreated(AccountId id) {
+import java.util.Currency;
+
+public record AccountCreated(AccountId id, Currency currency) {
 }
