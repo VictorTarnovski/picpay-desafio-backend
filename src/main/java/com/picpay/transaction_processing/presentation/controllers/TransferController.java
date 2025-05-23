@@ -1,7 +1,7 @@
 package com.picpay.transaction_processing.presentation.controllers;
 
 import com.picpay.transaction_processing.application.use_cases.CreateTransferUseCase;
-import com.picpay.transaction_processing.domain.dtos.CreateTransferDto;
+import com.picpay.transaction_processing.domain.dtos.CreateTransferDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +22,7 @@ public class TransferController {
     public ResponseEntity<?> Create(
         @Valid
         @RequestBody
-        CreateTransferDto dto) {
+        CreateTransferDTO dto) {
         createTransferUseCase.execute(dto);
         return ResponseEntity.noContent().build();
     }

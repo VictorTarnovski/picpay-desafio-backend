@@ -16,7 +16,7 @@ public class DebitTransactionAuthorizerAdapter implements DebitTransactionAuthor
 
     @Override
     public void authorize(Account account, Money value) {
-        if (value.amount() > account.balance().amount()) {
+        if (!account.isBalanceGreaterThanOrEqual(value)) {
             throw new InsufficientBalanceException();
         }
         authorizer.authorize();

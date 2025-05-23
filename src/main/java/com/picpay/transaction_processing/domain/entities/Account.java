@@ -8,6 +8,7 @@ import com.picpay.transaction_processing.domain.ports.DebitTransactionAuthorizer
 import jakarta.persistence.*;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import java.util.Currency;
 import java.util.Objects;
 
 @Entity(name = "TransactionAccount")
@@ -48,8 +49,12 @@ public class Account extends AbstractAggregateRoot<Account> {
         return id;
     }
 
-    public Money balance() {
-        return balance;
+    public boolean isBalanceGreaterThanOrEqual(Money other) {
+        return balance.greaterThanOrEqual(other);
+    }
+
+    public Currency currency() {
+        return balance.currency();
     }
 
     public void credit(CreditTransactionAuthorizerPort authorizer, Money value) {

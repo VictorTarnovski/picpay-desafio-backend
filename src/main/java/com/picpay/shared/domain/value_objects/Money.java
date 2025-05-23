@@ -29,6 +29,15 @@ public record Money(long amount, Currency currency) {
         return new Money(this.amount - other.amount, this.currency);
     }
 
+    private boolean greaterThan(Money other) {
+        checkCurrencyMatch(other);
+        return this.amount > other.amount;
+    }
+
+    public boolean greaterThanOrEqual(Money other) {
+        return greaterThan(other) || this.equals(other);
+    }
+
     private void checkCurrencyMatch(Money other) {
         if (!this.currency.equals(other.currency)) {
             throw new IllegalArgumentException("Currencies must match");
