@@ -60,13 +60,17 @@ public class Account extends AbstractAggregateRoot<Account> {
     public void credit(CreditTransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize();
         balance = balance.add(value);
-        this.registerEvent(new BalanceChanged(this.id, balance));
+        registerBalanceChangedEvent();
     }
 
     public void debit(DebitTransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize(this, value);
         balance = balance.subtract(value);
-        this.registerEvent(new BalanceChanged(this.id, balance));
+        registerBalanceChangedEvent();
+    }
+
+    private void registerBalanceChangedEvent() {
+        this.registerEvent(new BalanceChanged(this.id, this.balance));
     }
 
 }
