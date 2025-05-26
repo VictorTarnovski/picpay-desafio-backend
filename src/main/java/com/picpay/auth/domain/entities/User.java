@@ -24,7 +24,7 @@ public class User extends AbstractAggregateRoot<User> {
     protected UserType type;
 
     User() {}
-    
+
     public User(
         String fullName,
         String document,
@@ -35,7 +35,7 @@ public class User extends AbstractAggregateRoot<User> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.fullName = fullName;
 
-        Objects.requireNonNull(type, "email must not be null");
+        Objects.requireNonNull(email, "email must not be null");
         this.email = new Email(email);
 
         Objects.requireNonNull(password, "password must not be null");
