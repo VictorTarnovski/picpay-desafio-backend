@@ -45,7 +45,11 @@ public class Account extends AbstractAggregateRoot<Account> {
         this.registerEvent(new AccountCreated(this.id, this.currency));
     }
 
-    AccountId id() {
+    public AccountId id() {
         return id;
+    }
+
+    public AccountType type() {
+        return type;
     }
 }

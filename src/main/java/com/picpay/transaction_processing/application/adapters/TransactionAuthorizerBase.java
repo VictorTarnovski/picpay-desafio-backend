@@ -8,9 +8,8 @@ import org.springframework.web.client.RestClient;
 @Component
 public class TransactionAuthorizerBase {
     public void authorize() {
-        var restClient = RestClient.create("https://util.devi.tools/api/v2/authorize");
-
-        restClient
+        RestClient
+            .create("https://util.devi.tools/api/v2/authorize")
             .get()
             .retrieve()
             .onStatus(status -> status == HttpStatus.FORBIDDEN, (request, response) -> {
