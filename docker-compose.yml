@@ -5,7 +5,7 @@ name: picpay-backend
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: picpay-postgres
+    container_name: picpay-backend-postgres
     environment:
       POSTGRES_DB: picpay
       POSTGRES_USER: postgres
