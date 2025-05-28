@@ -5,6 +5,7 @@ import com.picpay.transaction_processing.domain.dtos.CreateTransferDTO;
 import com.picpay.transaction_processing.domain.entities.Transaction;
 import com.picpay.transaction_processing.domain.exceptions.PayeeNotFoundException;
 import com.picpay.transaction_processing.domain.exceptions.PayerNotFoundException;
+import com.picpay.transaction_processing.domain.exceptions.RecursiveTransferException;
 import com.picpay.transaction_processing.domain.ports.CreditTransactionAuthorizerPort;
 import com.picpay.transaction_processing.domain.ports.DebitTransactionAuthorizerPort;
 import com.picpay.transaction_processing.domain.repositories.AccountRepository;
@@ -35,10 +36,15 @@ public class CreateTransferUseCase {
     @Transactional
     public void execute(CreateTransferDTO dto) {
         var payerId = new AccountId(dto.payer());
-        var payerAccount = accountRepository
-                .findById(payerId)
-                .orElseThrow(() -> new PayerNotFoundException(payerId));
         var payeeId = new AccountId(dto.payee());
+
+        if (payerId.equals(payeeId)) {
+            throw new RecursiveTransferException();
+        }
+
+        var payerAccount = accountRepository
+            .findById(payerId)
+            .orElseThrow(() -> new PayerNotFoundException(payerId));
         var payeeAccount = accountRepository
                 .findById(new AccountId(dto.payee()))
                 .orElseThrow(() -> new PayeeNotFoundException(payeeId));

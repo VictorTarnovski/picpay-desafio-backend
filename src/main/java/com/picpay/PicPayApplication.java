@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan
 @EnableJpaRepositories({
-    "com.picpay.account_management.infra.repositories",
-    "com.picpay.transaction_processing"
+    "com.picpay.account_management.domain.repositories",
+    "com.picpay.transaction_processing.domain.repositories"
 })
 public class PicPayApplication {
 
