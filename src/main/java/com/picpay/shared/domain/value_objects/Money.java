@@ -47,7 +47,7 @@ public record Money(long amount, Currency currency) {
         return this.amount < other.amount;
     }
 
-    public boolean lessThaOrEqual(Money other) {
+    public boolean lessThanOrEqual(Money other) {
         return lessThan(other) || equals(other);
     }
 
