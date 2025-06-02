@@ -39,7 +39,16 @@ public record Money(long amount, Currency currency) {
     }
 
     public boolean greaterThanOrEqual(Money other) {
-        return greaterThan(other) || this.equals(other);
+        return greaterThan(other) || equals(other);
+    }
+
+    public boolean lessThan(Money other) {
+        checkCurrencyMatch(other);
+        return this.amount < other.amount;
+    }
+
+    public boolean lessThaOrEqual(Money other) {
+        return lessThan(other) || equals(other);
     }
 
     private void checkCurrencyMatch(Money other) {
