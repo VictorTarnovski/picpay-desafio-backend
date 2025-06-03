@@ -24,7 +24,11 @@ class AccountCreatedInBoxMessageConsumerJob {
 
     @Scheduled(fixedRate = 60000)
     void execute() throws JsonProcessingException {
-        var messages = repository.findUnprocessedByType(AccountCreated.class, PageRequest.ofSize(30)).getContent();
+        var messages = repository
+            .findUnprocessedByType(
+                AccountCreated.class.getTypeName(),
+                PageRequest.ofSize(30))
+            .getContent();
 
         var objectMapper = new ObjectMapper();
         for (InBoxMessage message : messages) {

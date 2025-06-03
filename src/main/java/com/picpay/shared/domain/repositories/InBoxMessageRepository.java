@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.UUID;
 
 public interface InBoxMessageRepository<T extends BoxMessage> extends CrudRepository<T, UUID> {
-    @Query("SELECT m FROM inbox_messages AS m WHERE m.processed = false and m.type = :type ORDER BY m.created_at ASC")
-    Page<T> findUnprocessedByType(@Param("type") Class<?> type, Pageable pageable);
+    @Query("SELECT m FROM InBoxMessage AS m WHERE m.processed = false and m.type = :type ORDER BY m.createdAt ASC")
+    Page<T> findUnprocessedByType(@Param("type") String type, Pageable pageable);
 }
