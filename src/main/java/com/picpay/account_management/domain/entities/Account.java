@@ -3,7 +3,7 @@ package com.picpay.account_management.domain.entities;
 import com.picpay.account_management.domain.repositories.AccountRepository;
 import com.picpay.shared.domain.entities.AccountId;
 import com.picpay.shared.domain.enums.AccountType;
-import com.picpay.account_management.domain.events.AccountCreated;
+import com.picpay.shared.domain.events.AccountCreated;
 import com.picpay.auth.domain.entities.UserId;
 import jakarta.persistence.*;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import java.util.Currency;
 import java.util.Objects;
 
-@Entity(name = "ManagementAccount")
+@Entity(name = "account_management.Account")
 @Table(name = "accounts", schema = "account_management")
 public class Account extends AbstractAggregateRoot<Account> {
     @EmbeddedId

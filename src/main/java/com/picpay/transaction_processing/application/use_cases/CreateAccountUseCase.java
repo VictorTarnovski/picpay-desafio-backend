@@ -1,23 +1,22 @@
-package com.picpay.transaction_processing.application.listeners;
+package com.picpay.transaction_processing.application.use_cases;
 
-import com.picpay.account_management.domain.events.AccountCreated;
+import com.picpay.shared.domain.events.AccountCreated;
 import com.picpay.shared.domain.value_objects.Money;
 import com.picpay.transaction_processing.domain.entities.Account;
 import com.picpay.transaction_processing.domain.repositories.AccountRepository;
-import org.springframework.context.event.EventListener;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountCreatedEventListener {
+public class CreateAccountUseCase {
     private final AccountRepository repository;
 
-    public AccountCreatedEventListener(AccountRepository repository) {
+    public CreateAccountUseCase(AccountRepository repository) {
         this.repository = repository;
     }
 
-    @EventListener
-    public void onAccountCreated(AccountCreated accountCreated) {
-        // TODO: Implement OutBoxMesage Pattern
+    @Transactional
+    public void execute(AccountCreated accountCreated) {
         var account = new Account(accountCreated.id(), new Money(accountCreated.currency()));
         repository.save(account);
     }

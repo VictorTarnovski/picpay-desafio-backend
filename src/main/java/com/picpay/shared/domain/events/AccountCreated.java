@@ -1,4 +1,4 @@
-package com.picpay.account_management.domain.events;
+package com.picpay.shared.domain.events;
 
 import com.picpay.shared.domain.entities.AccountId;
 
