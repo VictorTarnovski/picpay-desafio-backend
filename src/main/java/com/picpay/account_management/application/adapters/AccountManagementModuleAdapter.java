@@ -8,6 +8,7 @@ import com.picpay.shared.domain.enums.AccountType;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class AccountManagementModuleAdapter implements AccountManagementModulePort {
@@ -18,8 +19,8 @@ public class AccountManagementModuleAdapter implements AccountManagementModulePo
     }
 
     @Override
-    public AccountType type(AccountId id) {
+    public Optional<AccountType> type(AccountId id) {
         Objects.requireNonNull(id, "id must not be null");
-        return repository.findById(id).map(Account::type).get();
+        return repository.findById(id).map(Account::type);
     }
 }

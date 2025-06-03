@@ -23,7 +23,7 @@ public class DebitTransactionAuthorizerAdapter implements DebitTransactionAuthor
 
     @Override
     public void authorize(Account account, Money value) {
-        if (accountManagement.type(account.id()) == AccountType.RETAILER) {
+        if (accountManagement.type(account.id()).get() == AccountType.RETAILER) {
             throw new RetailerCannotTransferFundsException();
         }
 

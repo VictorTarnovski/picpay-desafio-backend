@@ -3,6 +3,8 @@ package com.picpay.account_management.domain.ports;
 import com.picpay.shared.domain.entities.AccountId;
 import com.picpay.shared.domain.enums.AccountType;
 
+import java.util.Optional;
+
 public interface AccountManagementModulePort {
-    AccountType type(AccountId id);
+    Optional<AccountType> type(AccountId id);
 }
