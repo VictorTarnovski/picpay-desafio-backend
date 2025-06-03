@@ -33,7 +33,7 @@ public record Money(long amount, Currency currency) {
         return new Money(this.amount - other.amount, this.currency);
     }
 
-    private boolean greaterThan(Money other) {
+    public boolean greaterThan(Money other) {
         checkCurrencyMatch(other);
         return this.amount > other.amount;
     }
