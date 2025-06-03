@@ -2,7 +2,6 @@ package com.picpay.transaction_processing.domain.entities;
 
 import com.picpay.shared.domain.entities.AccountId;
 import com.picpay.shared.domain.value_objects.Money;
-import com.picpay.transaction_processing.domain.events.BalanceChanged;
 import com.picpay.transaction_processing.domain.ports.CreditTransactionAuthorizerPort;
 import com.picpay.transaction_processing.domain.ports.DebitTransactionAuthorizerPort;
 import jakarta.persistence.*;
@@ -11,7 +10,7 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import java.util.Currency;
 import java.util.Objects;
 
-@Entity(name = "TransactionAccount")
+@Entity(name = "transaction_processing.Account")
 @Table(name = "accounts", schema = "transaction_processing")
 public class Account extends AbstractAggregateRoot<Account> {
     @EmbeddedId
@@ -60,17 +59,11 @@ public class Account extends AbstractAggregateRoot<Account> {
     public void credit(CreditTransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize();
         balance = balance.add(value);
-        registerBalanceChangedEvent();
     }
 
     public void debit(DebitTransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize(this, value);
         balance = balance.subtract(value);
-        registerBalanceChangedEvent();
-    }
-
-    private void registerBalanceChangedEvent() {
-        this.registerEvent(new BalanceChanged(this.id, this.balance));
     }
 
 }
