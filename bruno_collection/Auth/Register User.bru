@@ -1,0 +1,20 @@
+meta {
+  name: Register User
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/auth/users/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "fullName": "John Doe",
+    "document": "682.267.620-14",
+    "email": "john.doe@mail.com",
+    "accountType": 1
+  }
+}
