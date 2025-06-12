@@ -21,6 +21,10 @@ public class User extends AbstractAggregateRoot<User> {
     @Embedded
     protected Email email;
     @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "hash", column = @Column(name = "password_hash")),
+        @AttributeOverride(name = "salt", column = @Column(name = "password_salt"))
+    })
     protected Password password;
 
     User() {}
