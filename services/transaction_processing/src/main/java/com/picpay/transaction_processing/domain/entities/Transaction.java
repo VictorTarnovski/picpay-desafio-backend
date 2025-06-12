@@ -3,6 +3,7 @@ package com.picpay.transaction_processing.domain.entities;
 import com.picpay.shared.domain.ids.AccountId;
 import com.picpay.shared.domain.value_objects.Money;
 import com.picpay.transaction_processing.domain.events.TransactionCreated;
+import com.picpay.transaction_processing.domain.ids.TransactionId;
 import com.picpay.transaction_processing.domain.repositories.TransactionRepository;
 import jakarta.persistence.*;
 import org.springframework.data.domain.AbstractAggregateRoot;

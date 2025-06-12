@@ -1,7 +1,8 @@
 package com.picpay.transaction_processing.domain.repositories;
 
 import com.picpay.transaction_processing.domain.entities.Transaction;
-import com.picpay.transaction_processing.domain.entities.TransactionId;
+import com.picpay.transaction_processing.domain.ids.TransactionId;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

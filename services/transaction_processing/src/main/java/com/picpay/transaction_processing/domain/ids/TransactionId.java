@@ -1,4 +1,4 @@
-package com.picpay.transaction_processing.domain.entities;
+package com.picpay.transaction_processing.domain.ids;
 
 import jakarta.persistence.Embeddable;
 
