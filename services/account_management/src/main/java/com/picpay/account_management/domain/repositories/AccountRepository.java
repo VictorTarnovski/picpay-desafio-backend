@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("AccountManagementAccountRepository")
+@Repository
 public interface AccountRepository extends CrudRepository<Account, AccountId> {
     @Query(value = "SELECT nextval('account_management.accounts_id_seq')", nativeQuery = true)
     AccountId nextId();

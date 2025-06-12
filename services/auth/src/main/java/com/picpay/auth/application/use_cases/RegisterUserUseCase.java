@@ -16,6 +16,7 @@ public class RegisterUserUseCase {
     public void execute(RegisterUserDTO dto) {
         var otp = "";
         var user = new User(
+            userRepository,
             dto.fullName(),
             dto.document(),
             dto.email(),
