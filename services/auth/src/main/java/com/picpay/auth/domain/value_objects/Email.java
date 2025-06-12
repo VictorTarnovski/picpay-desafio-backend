@@ -15,7 +15,7 @@ public record Email(String email) {
     );
 
     public Email {
-        Objects.requireNonNull(email, "CPF must not be null");
+        Objects.requireNonNull(email, "Email must not be null");
         if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new InvalidEmailFormatException(email);
         }
