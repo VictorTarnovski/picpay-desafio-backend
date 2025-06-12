@@ -3,8 +3,10 @@ package com.picpay.auth.domain.value_objects;
 import java.util.Objects;
 
 public class Password {
-    private final String hash;
-    private final String salt;
+    private String salt;
+    private String hash;
+
+    Password() {}
 
     private Password(String input, String salt) {
         Objects.requireNonNull(input, "input must not be null");
