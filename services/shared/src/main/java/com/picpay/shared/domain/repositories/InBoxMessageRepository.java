@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface InBoxMessageRepository extends CrudRepository<InBoxMessage, UUID> {
     @Query(
-        value = "SELECT * FROM Inbox_messages WHERE processed = false and type = :type ORDER BY created_at ASC",
+        value = "SELECT * FROM inbox_messages WHERE processed = false and type = :type ORDER BY created_at ASC",
         nativeQuery = true
     )
     List<InBoxMessage> findUnprocessedByType(@Param("type") String type);
