@@ -6,8 +6,7 @@ import com.picpay.transaction_processing.domain.entities.Transaction;
 import com.picpay.transaction_processing.domain.exceptions.PayeeNotFoundException;
 import com.picpay.transaction_processing.domain.exceptions.PayerNotFoundException;
 import com.picpay.transaction_processing.domain.exceptions.RecursiveTransferException;
-import com.picpay.transaction_processing.domain.ports.CreditTransactionAuthorizerPort;
-import com.picpay.transaction_processing.domain.ports.DebitTransactionAuthorizerPort;
+import com.picpay.transaction_processing.domain.ports.TransactionAuthorizerPort;
 import com.picpay.transaction_processing.domain.repositories.AccountRepository;
 import com.picpay.transaction_processing.domain.repositories.TransactionRepository;
 import com.picpay.shared.domain.value_objects.Money;
@@ -18,19 +17,16 @@ import org.springframework.stereotype.Service;
 public class CreateTransferUseCase {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
-    private final DebitTransactionAuthorizerPort debitTransactionAuthorizer;
-    private final CreditTransactionAuthorizerPort creditTransactionAuthorizer;
+    private final TransactionAuthorizerPort transactionAuthorizer;
 
     public CreateTransferUseCase(
         AccountRepository accountRepository,
         TransactionRepository transactionRepository,
-        DebitTransactionAuthorizerPort debitTransactionAuthorizer,
-        CreditTransactionAuthorizerPort creditTransactionAuthorizer
+        TransactionAuthorizerPort transactionAuthorizer
     ) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
-        this.debitTransactionAuthorizer = debitTransactionAuthorizer;
-        this.creditTransactionAuthorizer = creditTransactionAuthorizer;
+        this.transactionAuthorizer = transactionAuthorizer;
     }
 
     @Transactional
@@ -57,8 +53,8 @@ public class CreateTransferUseCase {
             payeeAccount.id()
         );
 
-        payerAccount.debit(debitTransactionAuthorizer, amount);
-        payeeAccount.credit(creditTransactionAuthorizer, amount);
+        payerAccount.debit(transactionAuthorizer, amount);
+        payeeAccount.credit(transactionAuthorizer, amount);
 
         accountRepository.save(payerAccount);
         accountRepository.save(payeeAccount);

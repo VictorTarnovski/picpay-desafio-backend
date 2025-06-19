@@ -3,8 +3,9 @@ package com.picpay.transaction_processing.domain.entities;
 import com.picpay.shared.domain.ids.AccountId;
 import com.picpay.shared.domain.enums.AccountType;
 import com.picpay.shared.domain.value_objects.Money;
-import com.picpay.transaction_processing.domain.ports.CreditTransactionAuthorizerPort;
-import com.picpay.transaction_processing.domain.ports.DebitTransactionAuthorizerPort;
+import com.picpay.transaction_processing.domain.exceptions.InsufficientBalanceException;
+import com.picpay.transaction_processing.domain.exceptions.RetailerCannotTransferFundsException;
+import com.picpay.transaction_processing.domain.ports.TransactionAuthorizerPort;
 import jakarta.persistence.*;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
@@ -43,7 +44,6 @@ public class Account extends AbstractAggregateRoot<Account> {
         Objects.requireNonNull(id, "id must not be null");
         this.id = id;
 
-
         Objects.requireNonNull(type, "type must not be null");
         this.type = type;
 
@@ -60,21 +60,25 @@ public class Account extends AbstractAggregateRoot<Account> {
         return type;
     }
 
-    public boolean isBalanceGreaterThanOrEqual(Money other) {
-        return balance.greaterThanOrEqual(other);
-    }
-
     public Currency currency() {
         return balance.currency();
     }
 
-    public void credit(CreditTransactionAuthorizerPort authorizer, Money value) {
+    public void credit(TransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize();
         balance = balance.add(value);
     }
 
-    public void debit(DebitTransactionAuthorizerPort authorizer, Money value) {
-        authorizer.authorize(this, value);
+    public void debit(TransactionAuthorizerPort authorizer, Money value) {
+        if (type == AccountType.RETAILER) {
+            throw new RetailerCannotTransferFundsException();
+        }
+
+        if (!balance.greaterThanOrEqual(value)) {
+            throw new InsufficientBalanceException();
+        }
+
+        authorizer.authorize();
         balance = balance.subtract(value);
     }
 
