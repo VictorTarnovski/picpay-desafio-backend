@@ -12,7 +12,7 @@ import java.util.Currency;
 import java.util.Objects;
 
 @Entity
-@Table(name = "accounts", schema = "account_management")
+@Table(name = "accounts")
 public class Account extends AbstractAggregateRoot<Account> {
     @EmbeddedId
     protected AccountId id;

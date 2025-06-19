@@ -10,7 +10,7 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import java.util.Objects;
 
 @Entity
-@Table(name = "transactions", schema = "transaction_processing")
+@Table(name = "transactions")
 public class Transaction extends AbstractAggregateRoot<Transaction> {
     @EmbeddedId
     protected TransactionId id;
