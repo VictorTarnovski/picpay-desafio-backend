@@ -1,20 +1,20 @@
-package com.picpay.transaction_processing.application.scheduled_jobs;
+package com.picpay.account_management.application.scheduled_jobs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.picpay.shared.domain.repositories.InBoxMessageRepository;
-import com.picpay.transaction_processing.application.use_cases.ConsumeAccountOpenedMessageUseCase;
-import com.picpay.shared.domain.events.AccountOpened;
+import com.picpay.account_management.application.use_cases.ConsumeUserRegisteredMessageUseCase;
+import com.picpay.shared.domain.events.UserRegistered;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-class AccountOpenedInBoxMessageConsumerJob {
+class UserRegisteredInBoxMessageConsumerJob {
     private final InBoxMessageRepository repository;
-    private final ConsumeAccountOpenedMessageUseCase useCase;
+    private final ConsumeUserRegisteredMessageUseCase useCase;
 
-    AccountOpenedInBoxMessageConsumerJob(
+    UserRegisteredInBoxMessageConsumerJob(
         InBoxMessageRepository repository,
-        ConsumeAccountOpenedMessageUseCase useCase
+        ConsumeUserRegisteredMessageUseCase useCase
     ) {
         this.repository = repository;
         this.useCase = useCase;
@@ -22,7 +22,7 @@ class AccountOpenedInBoxMessageConsumerJob {
 
     @Scheduled(fixedRate = 15000)
     void execute() throws JsonProcessingException {
-        var messages = repository.findUnprocessedByType(AccountOpened.class.getTypeName());
+        var messages = repository.findUnprocessedByType(UserRegistered.class.getTypeName());
 
         for (var message : messages) {
             useCase.execute(message);

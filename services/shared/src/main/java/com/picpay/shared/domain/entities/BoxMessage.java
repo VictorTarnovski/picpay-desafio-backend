@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.picpay.shared.domain.builders.BoxMessageBuilder;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class BoxMessage {
     @Id
     public UUID id;
     public String type;
+    @JdbcTypeCode(SqlTypes.JSON)
     public String payload;
     public boolean processed;
     public OffsetDateTime createdAt;
@@ -24,9 +27,10 @@ public class BoxMessage {
     }
 
     public static BoxMessage of(Object o) throws JsonProcessingException {
+        var payload = new ObjectMapper().writeValueAsString(o);
         return builder()
             .type(o.getClass().getTypeName())
-            .payload(new ObjectMapper().writeValueAsString(o))
+            .payload(payload)
             .build();
     }
 

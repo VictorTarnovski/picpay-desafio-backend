@@ -1,22 +1,22 @@
-package com.picpay.account_management.application.use_cases;
+package com.picpay.auth.application.use_cases;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.picpay.shared.domain.entities.OutBoxMessage;
 import com.picpay.shared.domain.repositories.OutBoxMessageRepository;
-import com.picpay.shared.domain.events.AccountOpened;
+import com.picpay.shared.domain.events.UserRegistered;
 import jakarta.transaction.Transactional;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 // Created to ensure @Transactional works
-@Service
-public class SendAccountOpenedMessageUseCase {
-    private final KafkaTemplate<String, AccountOpened> kafka;
+@Component
+public class SendUserRegisteredMessageUseCase {
+    private final KafkaTemplate<String, UserRegistered> kafka;
     private final OutBoxMessageRepository repository;
 
-    public SendAccountOpenedMessageUseCase(
-        KafkaTemplate<String, AccountOpened> kafka,
+    public SendUserRegisteredMessageUseCase(
+        KafkaTemplate<String, UserRegistered> kafka,
         OutBoxMessageRepository repository
     ) {
         this.kafka = kafka;
@@ -25,9 +25,9 @@ public class SendAccountOpenedMessageUseCase {
 
     @Transactional
     public void execute(OutBoxMessage message) throws JsonProcessingException {
-        var accountOpened = new ObjectMapper().readValue(message.payload, AccountOpened.class);
+        var userRegistered = new ObjectMapper().readValue(message.payload, UserRegistered.class);
         kafka
-        .send("accountOpened", accountOpened)
+        .send("userRegistered", userRegistered)
         .whenComplete((result, ex) -> {
             if(ex != null) return;
             message.processed = true;

@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "outbox_messages")
 public class OutBoxMessage extends BoxMessage {
+    OutBoxMessage() {}
     public OutBoxMessage(BoxMessage message) {
         id = message.id;
         type = message.type;

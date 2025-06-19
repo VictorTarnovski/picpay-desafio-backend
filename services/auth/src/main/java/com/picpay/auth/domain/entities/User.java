@@ -1,7 +1,7 @@
 package com.picpay.auth.domain.entities;
 
-import com.picpay.auth.domain.events.UserCreated;
-import com.picpay.auth.domain.ids.UserId;
+import com.picpay.shared.domain.events.UserRegistered;
+import com.picpay.shared.domain.ids.UserId;
 import com.picpay.auth.domain.value_objects.Email;
 import com.picpay.auth.domain.value_objects.Password;
 import com.picpay.auth.domain.repositories.UserRepository;
@@ -53,7 +53,7 @@ public class User extends AbstractAggregateRoot<User> {
         this.document = document;
 
         Objects.requireNonNull(accountType, "accountType must not be null");
-        this.registerEvent(new UserCreated(this.id, accountType));
+        this.registerEvent(new UserRegistered(this.id, accountType));
     }
 
     public boolean hasPassword(String input) {

@@ -17,8 +17,6 @@ public class Account extends AbstractAggregateRoot<Account> {
     @EmbeddedId
     protected AccountId id;
 
-    protected AccountType type;
-
     protected Currency currency;
 
     @Embedded
@@ -29,7 +27,12 @@ public class Account extends AbstractAggregateRoot<Account> {
 
     Account() {}
 
-    public Account(AccountRepository repository, AccountType type, Currency currency, UserId userId) {
+    public Account(
+        AccountRepository repository,
+        AccountType type,
+        Currency currency,
+        UserId userId
+    ) {
         Objects.requireNonNull(repository, "repository must not be null");
         this.id = repository.nextId();
 
@@ -46,9 +49,5 @@ public class Account extends AbstractAggregateRoot<Account> {
 
     public AccountId id() {
         return id;
-    }
-
-    public AccountType type() {
-        return type;
     }
 }
