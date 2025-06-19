@@ -6,7 +6,7 @@ import org.springframework.http.ProblemDetail;
 
 public class BlankPasswordSaltException extends PicPayException {
     public BlankPasswordSaltException() {
-        super("password salt mut not be blank");
+        super("Password salt must not be blank");
     }
 
     @Override
@@ -15,7 +15,7 @@ public class BlankPasswordSaltException extends PicPayException {
 
         pb.setStatus(HttpStatus.UNPROCESSABLE_ENTITY);
         pb.setTitle("Blank password salt");
-        pb.setDetail("Password salt mut not be blank");
+        pb.setDetail("Password salt must not be blank");
 
         return pb;
     }

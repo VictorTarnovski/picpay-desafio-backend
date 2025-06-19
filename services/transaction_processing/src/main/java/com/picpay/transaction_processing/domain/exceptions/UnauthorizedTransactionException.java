@@ -6,7 +6,7 @@ import org.springframework.http.ProblemDetail;
 
 public class UnauthorizedTransactionException extends PicPayException {
     public UnauthorizedTransactionException() {
-        super("Unauthorized transaction exception");
+        super("Unauthorized transaction");
     }
 
     @Override
@@ -14,7 +14,7 @@ public class UnauthorizedTransactionException extends PicPayException {
         var pb = super.toProblemDetail();
 
         pb.setStatus(HttpStatus.FORBIDDEN);
-        pb.setTitle("Unauthorized transaction exception");
+        pb.setTitle("Unauthorized transaction");
 
         return pb;
     }

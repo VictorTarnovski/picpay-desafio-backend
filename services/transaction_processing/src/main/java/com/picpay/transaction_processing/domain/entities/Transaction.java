@@ -2,7 +2,6 @@ package com.picpay.transaction_processing.domain.entities;
 
 import com.picpay.shared.domain.ids.AccountId;
 import com.picpay.shared.domain.value_objects.Money;
-import com.picpay.transaction_processing.domain.events.TransactionCreated;
 import com.picpay.transaction_processing.domain.ids.TransactionId;
 import com.picpay.transaction_processing.domain.repositories.TransactionRepository;
 import jakarta.persistence.*;
@@ -37,7 +36,12 @@ public class Transaction extends AbstractAggregateRoot<Transaction> {
 
     Transaction() {}
 
-    public Transaction(TransactionRepository repository, Money value, AccountId payerId, AccountId payeeId) {
+    public Transaction(
+        TransactionRepository repository,
+        Money value,
+        AccountId payerId,
+        AccountId payeeId
+    ) {
         Objects.requireNonNull(repository, "repository must not be null");
         this.id = repository.nextId();
 
@@ -49,8 +53,6 @@ public class Transaction extends AbstractAggregateRoot<Transaction> {
 
         Objects.requireNonNull(payeeId, "payeeId must not be null");
         this.payeeId = payeeId;
-
-        this.registerEvent(new TransactionCreated(this.id, this.value, this.payerId, this.payeeId));
     }
 
     public Money value() {

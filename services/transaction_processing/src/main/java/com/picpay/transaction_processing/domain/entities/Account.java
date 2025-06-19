@@ -3,6 +3,7 @@ package com.picpay.transaction_processing.domain.entities;
 import com.picpay.shared.domain.ids.AccountId;
 import com.picpay.shared.domain.enums.AccountType;
 import com.picpay.shared.domain.value_objects.Money;
+import com.picpay.transaction_processing.domain.events.FundReceived;
 import com.picpay.transaction_processing.domain.exceptions.InsufficientBalanceException;
 import com.picpay.transaction_processing.domain.exceptions.RetailerCannotTransferFundsException;
 import com.picpay.transaction_processing.domain.ports.TransactionAuthorizerPort;
@@ -67,6 +68,7 @@ public class Account extends AbstractAggregateRoot<Account> {
     public void credit(TransactionAuthorizerPort authorizer, Money value) {
         authorizer.authorize();
         balance = balance.add(value);
+        registerEvent(new FundReceived(this.id, value));
     }
 
     public void debit(TransactionAuthorizerPort authorizer, Money value) {

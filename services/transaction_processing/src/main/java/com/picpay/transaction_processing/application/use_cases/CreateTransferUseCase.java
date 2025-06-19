@@ -42,19 +42,19 @@ public class CreateTransferUseCase {
             .findById(payerId)
             .orElseThrow(() -> new PayerNotFoundException(payerId));
         var payeeAccount = accountRepository
-                .findById(new AccountId(dto.payee()))
-                .orElseThrow(() -> new PayeeNotFoundException(payeeId));
-        var amount = new Money(dto.value(), payerAccount.currency());
+            .findById(payeeId)
+            .orElseThrow(() -> new PayeeNotFoundException(payeeId));
+        var value = new Money(dto.value(), payerAccount.currency());
+
+        payerAccount.debit(transactionAuthorizer, value);
+        payeeAccount.credit(transactionAuthorizer, value);
 
         var transaction = new Transaction(
             transactionRepository,
-            amount,
+            value,
             payerAccount.id(),
             payeeAccount.id()
         );
-
-        payerAccount.debit(transactionAuthorizer, amount);
-        payeeAccount.credit(transactionAuthorizer, amount);
 
         accountRepository.save(payerAccount);
         accountRepository.save(payeeAccount);
